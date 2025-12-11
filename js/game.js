@@ -147,6 +147,15 @@ class RPGGame {
     const gameContainer = document.createElement('div');
     gameContainer.id = 'game-container';
     gameContainer.innerHTML = `
+      <!-- Landscape Orientation Notice -->
+      <div id="orientation-notice">
+        <div class="orientation-content">
+          <div class="orientation-icon">📱</div>
+          <p>Rotate your device for a better experience</p>
+          <div class="orientation-arrow">↻</div>
+        </div>
+      </div>
+
       <div id="game-screen">
         <canvas id="game-canvas"></canvas>
 
