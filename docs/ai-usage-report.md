@@ -38,28 +38,22 @@
 
 ## 2) AI Assistance Breakdown by Feature
 
-### Craftsman Quest Implementation
-| Component | AI Contribution | My Contribution |
-|-----------|-----------------|-----------------|
-| Quest Design | Suggested blueprint-gating mechanic | Defined 3 main quests as prerequisites |
-| NPC Dialog | Provided conditional dialog structure | Wrote quest narrative and hints |
-| Forging Animation | Suggested particle system approach | Implemented timing and visual effects |
-| Sword Ready State | Helped with state management pattern | Integrated with overall unlock system |
+### How AI Was Used
+AI tools played a significant role in developing the RPG game portion of this project. While I designed the concept and made all creative decisions, AI assisted with implementing game mechanics and solving technical challenges.
 
-### Combat System
-| Component | AI Contribution | My Contribution |
-|-----------|-----------------|-----------------|
-| Enemy Spawning | Provided wave-based spawn logic | Balanced enemy stats and spawn rate |
-| Attack Detection | Suggested box collision approach | Implemented attack hitbox directions |
-| XP/Level System | Structured progression formulas | Tuned XP rewards for game balance |
-| Damage Numbers | Provided floating text animation | Styled with game's visual theme |
-
-### Mini-Game (Debug Computer)
-| Component | AI Contribution | My Contribution |
-|-----------|-----------------|-----------------|
-| Puzzle Logic | Suggested Simon-says pattern | Chose symbols and sequence length |
-| UI Layout | Provided grid button layout | Styled with pixel-art aesthetic |
-| Success/Failure | Helped with state transitions | Added retry mechanism and hints |
+### Development Breakdown
+| Component | My Work | AI Assistance |
+|-----------|---------|---------------|
+| Project Concept | Conceived RPG portfolio idea, designed game flow | None |
+| HTML/CSS | Wrote markup, created RPG visual theme | Minor styling suggestions |
+| Portfolio Features | Implemented accordion, filters, validation | Helped with API integration patterns |
+| Game Engine | Designed game loop structure, controls | Helped implement Canvas rendering, state management |
+| Quest System | Designed 4-quest concept, wrote dialog content | Assisted with quest logic and unlock conditions |
+| Craftsman Quest | Created blueprint collection idea | Helped implement conditional spawning |
+| Combat System | Designed combat flow | Assisted with collision detection, enemy AI |
+| NPC Dialogs | Wrote all dialog text and narratives | Helped with conditional dialog state system |
+| Content Writing | Wrote all About, Projects, Skills text | None |
+| Testing | All manual testing across browsers | Suggested edge cases to check |
 
 ---
 
@@ -104,18 +98,24 @@ Using a single `state` object with nested `unlocked` flags allows:
 
 ## 5) Responsibilities & Collaboration
 
-### Student (Rayan)
-- Conceived the RPG portfolio concept
-- Designed the village map layout and NPC placement
-- Implemented core game loop and Canvas rendering
-- Created pixel-art styled CSS theme
+### My Work (Rayan)
+- Conceived the RPG portfolio concept and overall vision
+- Designed the game flow, quest structure, and user experience
+- Created the complete CSS theme (both portfolio and game UI)
+- Wrote all HTML structure and semantic markup
 - Wrote all portfolio content (About, Projects, Skills)
-- Tested gameplay flow and quest progression
-- Made final decisions on game balance and UX
+- Wrote all NPC dialog text and quest narratives
+- Performed all testing, debugging, and balancing
+- Made all creative and design decisions
+- Reviewed and integrated all code into the project
 
-### AI Assistants
-- **ChatGPT**: Portfolio interactivity, validation, API integration (Phase 1)
-- **Claude Code**: Game engine architecture, quest systems, debugging, documentation (Phase 2)
+### AI Tools Role (Significant for Game Development)
+- Helped implement the game engine (Canvas rendering, game loop)
+- Assisted with quest system logic and unlock conditions
+- Helped build the combat system and collision detection
+- Assisted with NPC conditional dialog state management
+- Helped with Craftsman quest blueprint mechanics
+- Provided debugging assistance throughout development
 
 ---
 
@@ -144,11 +144,11 @@ Using a single `state` object with nested `unlocked` flags allows:
 - Balancing feature scope with time constraints
 - Writing clear documentation for future maintainers
 
-### AI Collaboration Insights
-- AI excels at boilerplate and patterns, humans excel at creativity and judgment
-- Detailed prompts with context yield better results
-- Code review of AI output is essential, not optional
-- AI accelerates development but doesn't replace understanding
+### AI as a Learning Tool
+- AI helped explain concepts I then implemented myself
+- Every suggestion was evaluated and often rewritten
+- Understanding the "why" was prioritized over copy-pasting
+- AI is a tool like any other - the developer does the work
 
 ---
 

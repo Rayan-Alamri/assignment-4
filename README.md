@@ -94,22 +94,24 @@ assignment-4/
 
 ## AI Usage Summary
 
-**Claude Code (Claude Opus 4.5) assisted in:**
-- Designing the 4-quest unlock system architecture
-- Implementing the Craftsman NPC and blueprint collection mechanics
-- Bug enemy spawning, combat system, and XP/level progression
-- Debugging NPC dialog state transitions and collision detection
-- UI polish for unlock tracker, minimap, and reward popups
-- Documentation structure and professional formatting
+**My Work (Rayan):**
+- Conceived and designed the RPG portfolio concept
+- Created the visual theme and all CSS styling
+- Wrote all HTML structure
+- Wrote all content (About, Projects, Skills, dialog text)
+- Designed quest structure and game flow
+- Performed all testing and balancing
 
-**My role (Rayan):**
-- Planned the game concept and portfolio integration
-- Implemented core game loop, rendering, and controls
-- Designed the visual theme and CSS styling
-- Tested gameplay balance and quest progression
-- Verified accessibility and responsiveness
+**AI Tools Assisted With (Significant for Game):**
+- Implementing game engine (Canvas rendering, game loop)
+- Building quest system logic and unlock conditions
+- Combat system and collision detection
+- NPC conditional dialog system
+- Craftsman quest mechanics
 
-For the full log, see [`docs/ai-usage-report.md`](docs/ai-usage-report.md).
+AI played a significant role in developing the RPG game mechanics. I designed the concept and made all creative decisions.
+
+For details, see [`docs/ai-usage-report.md`](docs/ai-usage-report.md).
 
 ---
 
