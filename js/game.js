@@ -405,13 +405,26 @@ class RPGGame {
 
     document.body.insertBefore(gameContainer, document.body.firstChild);
 
-    // Mode toggle button
+    // Mode toggle button (external - for desktop)
     const toggleBtn = document.createElement('button');
     toggleBtn.id = 'mode-toggle';
     toggleBtn.className = 'pixel-btn mode-toggle';
     toggleBtn.innerHTML = '📄 Portfolio';
     toggleBtn.addEventListener('click', () => this.toggleMode());
     document.body.appendChild(toggleBtn);
+
+    // Add in-HUD portfolio button for mobile (replaces level text)
+    if (this.isMobile || window.innerWidth <= 1024) {
+      const hudInfo = document.querySelector('.hud-info');
+      if (hudInfo) {
+        const mobilePortfolioBtn = document.createElement('button');
+        mobilePortfolioBtn.id = 'mobile-portfolio-btn';
+        mobilePortfolioBtn.className = 'mobile-hud-btn';
+        mobilePortfolioBtn.innerHTML = '📄';
+        mobilePortfolioBtn.addEventListener('click', () => this.toggleMode());
+        hudInfo.appendChild(mobilePortfolioBtn);
+      }
+    }
   }
 
   setupCanvas() {
