@@ -420,7 +420,7 @@ class RPGGame {
         const mobilePortfolioBtn = document.createElement('button');
         mobilePortfolioBtn.id = 'mobile-portfolio-btn';
         mobilePortfolioBtn.className = 'mobile-hud-btn';
-        mobilePortfolioBtn.innerHTML = '📄';
+        mobilePortfolioBtn.innerHTML = '📄 Portfolio';
         mobilePortfolioBtn.addEventListener('click', () => this.toggleMode());
         hudInfo.appendChild(mobilePortfolioBtn);
       }
@@ -448,28 +448,42 @@ class RPGGame {
     this.canvas.width = gameWidth;
     this.canvas.height = gameHeight;
 
-    // Calculate display size to fit container while maintaining aspect ratio
-    const containerWidth = container.clientWidth || window.innerWidth;
-    const containerHeight = container.clientHeight || window.innerHeight;
-    // Reserve space for mobile controls (120px height + padding)
-    const mobileControlsHeight = isMobile ? 130 : 0;
+    let displayWidth, displayHeight;
 
-    const availableWidth = containerWidth - 8; // Account for borders
-    const availableHeight = containerHeight - mobileControlsHeight - 8;
+    if (isMobile) {
+      // Mobile: fill the entire screen width, leave 120px for controls at bottom
+      displayWidth = window.innerWidth;
+      displayHeight = window.innerHeight - 120;
 
-    const aspectRatio = gameWidth / gameHeight;
-    let displayWidth = availableWidth;
-    let displayHeight = displayWidth / aspectRatio;
+      // Maintain aspect ratio
+      const aspectRatio = gameWidth / gameHeight;
+      const screenRatio = displayWidth / displayHeight;
 
-    if (displayHeight > availableHeight) {
-      displayHeight = availableHeight;
-      displayWidth = displayHeight * aspectRatio;
-    }
+      if (screenRatio > aspectRatio) {
+        // Screen is wider than game - fit by height
+        displayHeight = displayHeight;
+        displayWidth = displayHeight * aspectRatio;
+      } else {
+        // Screen is taller than game - fit by width
+        displayWidth = displayWidth;
+        displayHeight = displayWidth / aspectRatio;
+      }
+    } else {
+      // Desktop: use container dimensions
+      const containerWidth = container.clientWidth || window.innerWidth;
+      const containerHeight = container.clientHeight || window.innerHeight;
 
-    // Ensure minimum playable size on mobile
-    if (isMobile && displayWidth < 300) {
-      displayWidth = Math.min(availableWidth, 300);
+      const availableWidth = containerWidth - 8;
+      const availableHeight = containerHeight - 8;
+
+      const aspectRatio = gameWidth / gameHeight;
+      displayWidth = availableWidth;
       displayHeight = displayWidth / aspectRatio;
+
+      if (displayHeight > availableHeight) {
+        displayHeight = availableHeight;
+        displayWidth = displayHeight * aspectRatio;
+      }
     }
 
     // Set CSS display size

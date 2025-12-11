@@ -43,11 +43,67 @@
   justify-content: flex-start;
 }
 
+/* Mobile: maximize game screen */
+.is-mobile-device #game-screen {
+  max-width: 100vw !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Media query fallback for mobile */
+@media (max-width: 1024px) {
+  #game-screen {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
 #game-canvas {
   display: block;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   margin: 0 auto;
+}
+
+/* Mobile: canvas fills available space */
+.is-mobile-device #game-canvas {
+  width: 100% !important;
+  max-width: 100vw !important;
+  height: calc(100vh - 120px) !important;
+  max-height: calc(100vh - 120px) !important;
+  object-fit: contain;
+}
+
+/* Media query fallback for canvas */
+@media (max-width: 1024px) {
+  #game-canvas {
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: calc(100vh - 120px) !important;
+    max-height: calc(100vh - 120px) !important;
+    object-fit: contain;
+  }
+
+  /* Hide elements on mobile via media query */
+  #minimap,
+  .hud-center,
+  .unlock-tracker,
+  #player-name,
+  #player-level,
+  .mode-toggle {
+    display: none !important;
+  }
+
+  #mobile-controls {
+    display: block !important;
+  }
 }
 
 /* ========================================
@@ -64,10 +120,26 @@
   z-index: 100;
 }
 
+/* Mobile: compact HUD as overlay */
+.is-mobile-device #game-hud {
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4px;
+}
+
 .hud-stats {
   display: flex;
   flex-direction: row;
   gap: 8px;
+}
+
+/* Mobile: smaller stat bars */
+.is-mobile-device .hud-stats {
+  gap: 4px;
 }
 
 .stat-bar {
@@ -78,6 +150,14 @@
   border: 2px solid #3a2f2a;
   padding: 4px 8px;
   min-width: 180px;
+}
+
+/* Mobile: compact stat bars */
+.is-mobile-device .stat-bar {
+  min-width: auto;
+  padding: 2px 4px;
+  gap: 3px;
+  border-width: 1px;
 }
 
 .stat-label {
@@ -695,6 +775,22 @@
 
 /* Hide level text on mobile to save space */
 .is-mobile-device #player-level {
+  display: none !important;
+}
+
+/* Hide minimap on mobile to maximize game view */
+.is-mobile-device #minimap {
+  display: none !important;
+}
+
+/* Hide unlock tracker (hud-center) on mobile */
+.is-mobile-device .hud-center,
+.is-mobile-device .unlock-tracker {
+  display: none !important;
+}
+
+/* Hide player name on mobile - just show the portfolio button */
+.is-mobile-device #player-name {
   display: none !important;
 }
 
