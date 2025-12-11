@@ -162,10 +162,20 @@ class RPGGame {
 
   setup() {
     // Apply mobile class to document for CSS targeting
-    if (this.isMobile) {
+    // Use User-Agent detection OR touch + small screen as fallback
+    const shouldShowMobile = this.isMobile ||
+      (('ontouchstart' in window || navigator.maxTouchPoints > 0) && window.innerWidth <= 1024);
+
+    if (shouldShowMobile) {
       document.documentElement.classList.add('is-mobile-device');
       document.body.classList.add('is-mobile-device');
+      this.isMobile = true; // Ensure flag is set
     }
+
+    // Re-check on orientation change
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => this.resizeCanvas(), 100);
+    });
 
     this.createGameUI();
     this.setupCanvas();
@@ -414,7 +424,8 @@ class RPGGame {
 
   resizeCanvas() {
     const container = document.getElementById('game-screen');
-    const isMobile = window.innerWidth <= 768;
+    // Use our User-Agent based detection, fallback to screen width check
+    const isMobile = this.isMobile || window.innerWidth <= 1024;
 
     // Fixed internal game resolution for consistent gameplay
     const gameWidth = 960;
@@ -427,7 +438,8 @@ class RPGGame {
     // Calculate display size to fit container while maintaining aspect ratio
     const containerWidth = container.clientWidth || window.innerWidth;
     const containerHeight = container.clientHeight || window.innerHeight;
-    const mobileControlsHeight = isMobile ? 150 : 0;
+    // Reserve space for mobile controls (160px height + padding)
+    const mobileControlsHeight = isMobile ? 170 : 0;
 
     const availableWidth = containerWidth - 8; // Account for borders
     const availableHeight = containerHeight - mobileControlsHeight - 8;
@@ -439,6 +451,12 @@ class RPGGame {
     if (displayHeight > availableHeight) {
       displayHeight = availableHeight;
       displayWidth = displayHeight * aspectRatio;
+    }
+
+    // Ensure minimum playable size on mobile
+    if (isMobile && displayWidth < 300) {
+      displayWidth = Math.min(availableWidth, 300);
+      displayHeight = displayWidth / aspectRatio;
     }
 
     // Set CSS display size
