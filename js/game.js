@@ -373,30 +373,35 @@ class RPGGame {
   resizeCanvas() {
     const container = document.getElementById('game-screen');
     const isMobile = window.innerWidth <= 768;
+
+    // Fixed internal game resolution for consistent gameplay
+    const gameWidth = 960;
+    const gameHeight = 640;
+
+    // Set internal canvas resolution (game world size)
+    this.canvas.width = gameWidth;
+    this.canvas.height = gameHeight;
+
+    // Calculate display size to fit container while maintaining aspect ratio
+    const containerWidth = container.clientWidth || window.innerWidth;
+    const containerHeight = container.clientHeight || window.innerHeight;
     const mobileControlsHeight = isMobile ? 150 : 0;
 
-    // Calculate available space
-    const maxWidth = Math.min(960, window.innerWidth - 20);
-    const maxHeight = Math.min(640, window.innerHeight - 100 - mobileControlsHeight);
+    const availableWidth = containerWidth - 8; // Account for borders
+    const availableHeight = containerHeight - mobileControlsHeight - 8;
 
-    // Maintain aspect ratio (3:2)
-    const aspectRatio = 3 / 2;
-    let width = maxWidth;
-    let height = width / aspectRatio;
+    const aspectRatio = gameWidth / gameHeight;
+    let displayWidth = availableWidth;
+    let displayHeight = displayWidth / aspectRatio;
 
-    if (height > maxHeight) {
-      height = maxHeight;
-      width = height * aspectRatio;
+    if (displayHeight > availableHeight) {
+      displayHeight = availableHeight;
+      displayWidth = displayHeight * aspectRatio;
     }
 
-    this.canvas.width = Math.floor(width);
-    this.canvas.height = Math.floor(height);
-
-    // Update player position if out of bounds
-    if (this.player) {
-      this.player.x = Math.min(this.player.x, this.canvas.width - this.player.width);
-      this.player.y = Math.min(this.player.y, this.canvas.height - this.player.height);
-    }
+    // Set CSS display size
+    this.canvas.style.width = Math.floor(displayWidth) + 'px';
+    this.canvas.style.height = Math.floor(displayHeight) + 'px';
 
     if (this.ctx) this.ctx.imageSmoothingEnabled = false;
   }
