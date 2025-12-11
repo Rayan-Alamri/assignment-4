@@ -727,12 +727,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 160px;
-  padding: 10px 20px;
-  background: #1a1a2e;
-  /* Solid dark color matching game container */
-  border-top: 3px solid #ffd700;
-  /* Gold border to match game theme */
+  height: 120px;
+  padding: 8px 15px;
+  background: transparent;
+  /* Transparent to not block game view */
   z-index: 1000;
   pointer-events: none;
 }
@@ -744,26 +742,26 @@
 /* D-Pad Container */
 .mobile-dpad {
   position: absolute;
-  left: 20px;
-  bottom: 20px;
-  width: 130px;
-  height: 130px;
+  left: 15px;
+  bottom: 10px;
+  width: 100px;
+  height: 100px;
   display: grid;
   grid-template-areas:
     ". up ."
     "left . right"
     ". down .";
-  grid-template-columns: 40px 40px 40px;
-  grid-template-rows: 40px 40px 40px;
-  gap: 2px;
+  grid-template-columns: 32px 32px 32px;
+  grid-template-rows: 32px 32px 32px;
+  gap: 1px;
 }
 
 .dpad-btn {
-  background: linear-gradient(180deg, #4a4a6a 0%, #2a2a4a 100%);
-  border: 3px solid #6a6a8a;
-  border-radius: 8px;
+  background: rgba(74, 74, 106, 0.9);
+  border: 2px solid #6a6a8a;
+  border-radius: 6px;
   color: #ffd700;
-  font-size: 18px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -800,15 +798,15 @@
 /* Action Buttons Container */
 .mobile-actions {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
+  right: 15px;
+  bottom: 10px;
   display: flex;
-  gap: 15px;
+  gap: 12px;
 }
 
 .action-btn {
-  width: 65px;
-  height: 65px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: linear-gradient(180deg, #4a4a6a 0%, #2a2a4a 100%);
   border: 3px solid #6a6a8a;

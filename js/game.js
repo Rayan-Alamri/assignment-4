@@ -438,8 +438,8 @@ class RPGGame {
     // Calculate display size to fit container while maintaining aspect ratio
     const containerWidth = container.clientWidth || window.innerWidth;
     const containerHeight = container.clientHeight || window.innerHeight;
-    // Reserve space for mobile controls (160px height + padding)
-    const mobileControlsHeight = isMobile ? 170 : 0;
+    // Reserve space for mobile controls (120px height + padding)
+    const mobileControlsHeight = isMobile ? 130 : 0;
 
     const availableWidth = containerWidth - 8; // Account for borders
     const availableHeight = containerHeight - mobileControlsHeight - 8;
