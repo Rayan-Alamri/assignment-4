@@ -729,7 +729,10 @@
   right: 0;
   height: 160px;
   padding: 10px 20px;
-  background: linear-gradient(to top, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.8) 80%, transparent 100%);
+  background: #1a1a2e;
+  /* Solid dark color matching game container */
+  border-top: 3px solid #ffd700;
+  /* Gold border to match game theme */
   z-index: 1000;
   pointer-events: none;
 }
