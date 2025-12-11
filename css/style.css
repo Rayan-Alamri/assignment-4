@@ -1,0 +1,1174 @@
+/* ========================================
+   16-BIT RPG PORTFOLIO THEME
+   Inspired by: Stardew Valley, Zelda, Final Fantasy
+   ======================================== */
+
+/* Import pixel fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  /* RPG Color Palette - Forest Theme */
+  --rpg-forest-dark: #2d4a2b;
+  --rpg-forest-mid: #4a7c59;
+  --rpg-forest-light: #6faa7f;
+  --rpg-earth: #8b6f47;
+  --rpg-wood-dark: #5c4a3a;
+  --rpg-wood-light: #9d8369;
+  --rpg-parchment: #f4e8d0;
+  --rpg-parchment-dark: #d4c4a8;
+  --rpg-gold: #ffd700;
+  --rpg-gold-dark: #b8860b;
+  --rpg-ui-border: #3a2f2a;
+  --rpg-shadow: rgba(0, 0, 0, 0.6);
+  --rpg-glow: rgba(255, 215, 0, 0.4);
+
+  /* RPG Stats Colors */
+  --rpg-health: #e74c3c;
+  --rpg-health-bg: #8b1e1e;
+  --rpg-mana: #3498db;
+  --rpg-mana-bg: #1a5a8b;
+  --rpg-exp: #2ecc71;
+
+  /* Spacing */
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --max-w: 1200px;
+
+  /* Pixel border thickness */
+  --pixel-border: 4px;
+}
+
+/* Light Theme = Day / Forest Theme */
+:root[data-theme="light"] {
+  --bg: #8db899;
+  --bg-pattern: #7da589;
+  --text: #2d3436;
+  --card-bg: var(--rpg-parchment);
+  --card-border: var(--rpg-wood-dark);
+  --ui-bg: var(--rpg-wood-light);
+  --ui-border: var(--rpg-ui-border);
+  --muted: #5c4a3a;
+}
+
+/* Dark Theme = Night / Dungeon Theme */
+:root[data-theme="dark"] {
+  --bg: #1a1a2e;
+  --bg-pattern: #16213e;
+  --text: #f4e8d0;
+  --card-bg: #2a2438;
+  --card-border: #1a1424;
+  --ui-bg: #3a3244;
+  --ui-border: #1a1424;
+  --muted: #9d8369;
+}
+
+/* ========================================
+   BASE STYLES & RESET
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      var(--bg-pattern) 2px,
+      var(--bg-pattern) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      var(--bg-pattern) 2px,
+      var(--bg-pattern) 4px
+    );
+  color: var(--text);
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Pixel-style headings */
+h1, h2, h3 {
+  font-family: 'Press Start 2P', monospace;
+  line-height: 1.4;
+  margin: var(--space-4) 0 var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 var(--rpg-shadow);
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: var(--rpg-gold);
+}
+
+h2 {
+  font-size: 1.2rem;
+  color: var(--rpg-gold);
+  padding-bottom: var(--space-2);
+  border-bottom: 4px solid var(--rpg-gold-dark);
+  margin-bottom: var(--space-4);
+}
+
+h3 {
+  font-size: 0.9rem;
+  color: var(--rpg-forest-light);
+}
+
+p {
+  margin: var(--space-2) 0;
+  font-size: 1.1rem;
+}
+
+a {
+  color: var(--rpg-gold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover, a:focus-visible {
+  color: var(--rpg-gold-dark);
+  text-decoration: underline;
+}
+
+/* ========================================
+   HEADER - PLAYER HUD
+   ======================================== */
+
+header {
+  background: var(--ui-bg);
+  border-bottom: var(--pixel-border) solid var(--ui-border);
+  box-shadow: 0 4px 0 var(--rpg-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  margin: 0;
+  padding: var(--space-3) 0;
+  font-size: 1.3rem;
+  position: relative;
+  display: inline-block;
+}
+
+header h1::before {
+  content: "LVL 21 ";
+  font-size: 0.7rem;
+  color: var(--rpg-forest-light);
+  margin-right: var(--space-2);
+}
+
+header h1::after {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: var(--rpg-gold);
+  margin-left: var(--space-2);
+  vertical-align: middle;
+  box-shadow:
+    inset 0 0 0 2px var(--rpg-gold-dark),
+    2px 2px 0 var(--rpg-shadow);
+}
+
+header .navigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-2);
+}
+
+header .navigation a {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  background: var(--card-bg);
+  border: var(--pixel-border) solid var(--card-border);
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  position: relative;
+}
+
+header .navigation a:hover,
+header .navigation a:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+  text-decoration: none;
+}
+
+header .navigation a:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--rpg-shadow);
+}
+
+/* Theme Toggle - Day/Night Orb */
+.theme-toggle {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--pixel-border) solid var(--ui-border);
+  background: var(--card-bg);
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+  transition: transform 0.1s ease;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+}
+
+.theme-toggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--rpg-shadow);
+}
+
+.theme-toggle::before,
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  transition: all 0.4s ease;
+}
+
+/* Sun (Light mode) */
+.theme-toggle::before {
+  width: 28px;
+  height: 28px;
+  background: #ffd700;
+  box-shadow:
+    inset 0 0 0 3px #ffed4e,
+    0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+/* Moon (Dark mode) */
+[data-theme="dark"] .theme-toggle::before {
+  background: #f0f0f0;
+  box-shadow:
+    inset -6px -6px 0 #c0c0c0,
+    0 0 12px rgba(240, 240, 240, 0.4);
+}
+
+.theme-toggle__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Weather & Timer Chips - Mini HUD elements */
+.weather-chip,
+.timer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-2);
+  background: var(--card-bg);
+  border: 3px solid var(--card-border);
+  box-shadow: 3px 3px 0 var(--rpg-shadow);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  position: relative;
+}
+
+.weather-chip__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+}
+
+.weather-chip__temp {
+  color: var(--rpg-health);
+  font-weight: bold;
+}
+
+.weather-chip__state,
+.timer-chip__value {
+  color: var(--text);
+}
+
+.timer-chip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  background: var(--card-bg);
+  border: 3px solid var(--card-border);
+  padding: 6px 10px;
+  white-space: nowrap;
+  font-size: 0.55rem;
+  box-shadow: 3px 3px 0 var(--rpg-shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.timer-chip:hover::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ========================================
+   CONTAINER & SECTIONS
+   ======================================== */
+
+.container,
+header {
+  max-width: var(--max-w);
+  margin: auto;
+  padding: 0 var(--space-3);
+}
+
+section {
+  padding: var(--space-5) 0;
+  margin: var(--space-4) 0;
+  position: relative;
+}
+
+/* RPG Panel/Card Style */
+.panel-card,
+.project-card,
+.advice-card,
+.github-card {
+  background: var(--card-bg);
+  border: var(--pixel-border) solid var(--card-border);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+  padding: var(--space-4);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.panel-card:hover,
+.advice-card:hover,
+.github-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--rpg-shadow);
+}
+
+/* ========================================
+   ABOUT ME - CHARACTER SHEET
+   ======================================== */
+
+#about {
+  position: relative;
+}
+
+#about::before {
+  content: "⚔️ CHARACTER INFO ⚔️";
+  display: block;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  color: var(--rpg-forest-light);
+  margin-bottom: var(--space-3);
+  letter-spacing: 2px;
+}
+
+#about p {
+  background: var(--card-bg);
+  border: var(--pixel-border) solid var(--card-border);
+  padding: var(--space-4);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+  position: relative;
+  font-size: 1.15rem;
+}
+
+#about p::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: var(--space-3);
+  width: 48px;
+  height: 48px;
+  background: var(--rpg-gold);
+  border: 3px solid var(--card-border);
+  box-shadow: 3px 3px 0 var(--rpg-shadow);
+}
+
+/* ========================================
+   PROJECTS - INVENTORY GRID
+   ======================================== */
+
+#projects h2::before {
+  content: "🎒 ";
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.filter-field label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.65rem;
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--rpg-gold);
+}
+
+.filter-field select {
+  width: 100%;
+  padding: var(--space-2);
+  border: 3px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+}
+
+.level-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--space-2) var(--space-3);
+  border: 3px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.pill-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+}
+
+.pill-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--rpg-shadow);
+}
+
+.pill-button.is-active {
+  background: var(--rpg-gold);
+  color: var(--rpg-ui-border);
+  border-color: var(--rpg-gold-dark);
+}
+
+.pill-button--ghost {
+  background: transparent;
+  color: var(--text);
+}
+
+.pill-button--ghost.is-active {
+  background: var(--rpg-gold);
+  color: var(--rpg-ui-border);
+}
+
+.field-hint {
+  color: var(--muted);
+  margin: var(--space-1) 0 0;
+  font-size: 1rem;
+}
+
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Project Cards as Inventory Slots */
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: var(--pixel-border) solid var(--card-border);
+  padding: var(--space-3);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.project-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--rpg-shadow);
+}
+
+.project-card.is-open {
+  border-color: var(--rpg-gold);
+  box-shadow:
+    6px 6px 0 var(--rpg-shadow),
+    0 0 20px var(--rpg-glow);
+}
+
+/* Item Type Icons */
+.project-card[data-type="web"]::before {
+  content: "📜";
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  font-size: 1.5rem;
+}
+
+.project-card[data-type="hardware"]::before {
+  content: "🔨";
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  font-size: 1.5rem;
+}
+
+.project-card[data-type="ai"]::before {
+  content: "🔮";
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  font-size: 1.5rem;
+}
+
+.project-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.project-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--rpg-gold);
+  line-height: 1.4;
+  padding-right: var(--space-4);
+}
+
+.project-toggle-icon::before {
+  content: "+";
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  color: var(--rpg-forest-light);
+}
+
+.project-toggle[aria-expanded="true"] .project-toggle-icon::before {
+  content: "-";
+  color: var(--rpg-health);
+}
+
+.project-content {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 2px dashed var(--card-border);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.3s ease;
+}
+
+.project-content.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.project-card img {
+  margin-top: var(--space-3);
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 3px solid var(--card-border);
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--bg-pattern);
+}
+
+.projects-empty {
+  margin-top: var(--space-3);
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  padding: var(--space-4);
+  background: var(--card-bg);
+  border: 3px dashed var(--card-border);
+}
+
+/* ========================================
+   PERSONALIZED CONTROLS - GUILD SETTINGS
+   ======================================== */
+
+#session h2::before {
+  content: "⚙️ ";
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.panel-card h3 {
+  margin-top: 0;
+  font-size: 0.8rem;
+}
+
+.stacked {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  color: var(--rpg-gold);
+}
+
+.panel-card input {
+  width: 100%;
+  padding: var(--space-2);
+  border: 3px solid var(--card-border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  box-shadow: inset 3px 3px 0 var(--rpg-shadow);
+}
+
+.muted-text {
+  color: var(--muted);
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+/* ========================================
+   ADVICE & GITHUB - INFO PANELS
+   ======================================== */
+
+#advice h2::before {
+  content: "💬 ";
+}
+
+#github h2::before {
+  content: "📚 ";
+}
+
+.advice-card,
+.github-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.advice-text {
+  font-size: 1.15rem;
+  font-weight: normal;
+  margin: 0;
+  font-style: italic;
+  color: var(--text);
+}
+
+.advice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.advice-button {
+  padding: var(--space-2) var(--space-3);
+  border: 3px solid var(--card-border);
+  background: var(--rpg-gold);
+  color: var(--rpg-ui-border);
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.advice-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+}
+
+.advice-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--rpg-shadow);
+}
+
+.advice-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.advice-status,
+.github-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.advice-status.is-error {
+  color: var(--rpg-health);
+}
+
+.github-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.github-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.github-item {
+  background: var(--bg);
+  border: 3px solid var(--card-border);
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-2);
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+  transition: transform 0.1s ease;
+}
+
+.github-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+}
+
+.github-item a {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--rpg-gold);
+}
+
+.github-item a:hover {
+  color: var(--rpg-gold-dark);
+}
+
+.github-meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.github-empty {
+  color: var(--muted);
+  padding: var(--space-3);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ========================================
+   CONTACT - QUEST BOARD / MESSAGE SCROLL
+   ======================================== */
+
+#contact h2::before {
+  content: "✉️ ";
+}
+
+#contact form {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--card-bg);
+  border: var(--pixel-border) solid var(--card-border);
+  padding: var(--space-4);
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+  position: relative;
+}
+
+#contact form::before {
+  content: "📋 SEND MESSAGE";
+  display: block;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  color: var(--rpg-gold);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px dashed var(--card-border);
+}
+
+#contact label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.65rem;
+  color: var(--rpg-gold);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+#contact input,
+#contact textarea {
+  width: 100%;
+  padding: var(--space-2);
+  border: 3px solid var(--card-border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  box-shadow: inset 3px 3px 0 var(--rpg-shadow);
+  transition: border-color 0.2s ease;
+}
+
+#contact input:focus,
+#contact textarea:focus {
+  outline: none;
+  border-color: var(--rpg-gold);
+  box-shadow:
+    inset 3px 3px 0 var(--rpg-shadow),
+    0 0 0 2px var(--rpg-gold);
+}
+
+#contact input[aria-invalid="true"],
+#contact textarea[aria-invalid="true"] {
+  border-color: var(--rpg-health);
+  box-shadow:
+    inset 3px 3px 0 var(--rpg-shadow),
+    0 0 0 2px var(--rpg-health);
+}
+
+#contact textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.field-error {
+  font-size: 0.9rem;
+  color: var(--rpg-health);
+  min-height: 1rem;
+  font-family: 'VT323', monospace;
+}
+
+#contact button {
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 3px solid var(--card-border);
+  background: var(--rpg-gold);
+  color: var(--rpg-ui-border);
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  box-shadow: 6px 6px 0 var(--rpg-shadow);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  text-transform: uppercase;
+}
+
+#contact button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--rpg-shadow);
+}
+
+#contact button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 var(--rpg-shadow);
+}
+
+#contact button::before {
+  content: "📨 ";
+}
+
+.form-status {
+  margin-top: var(--space-2);
+  font-weight: normal;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.65rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  padding: var(--space-2);
+  border: 2px solid transparent;
+}
+
+.form-status.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-status.is-success {
+  color: var(--rpg-exp);
+  border-color: var(--rpg-exp);
+  background: rgba(46, 204, 113, 0.1);
+}
+
+.form-status.is-error {
+  color: var(--rpg-health);
+  border-color: var(--rpg-health);
+  background: rgba(231, 76, 60, 0.1);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+footer {
+  border-top: var(--pixel-border) solid var(--ui-border);
+  background: var(--ui-bg);
+  color: var(--muted);
+  text-align: center;
+  padding: var(--space-4) 0;
+  box-shadow: 0 -4px 0 var(--rpg-shadow);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes theme-toggle-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pixel-glow {
+  0%, 100% { box-shadow: 6px 6px 0 var(--rpg-shadow); }
+  50% { box-shadow: 6px 6px 0 var(--rpg-shadow), 0 0 20px var(--rpg-glow); }
+}
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.projects-list .project-card.reveal:nth-child(1) {
+  transition-delay: 0.05s;
+}
+
+.projects-list .project-card.reveal:nth-child(2) {
+  transition-delay: 0.15s;
+}
+
+.projects-list .project-card.reveal:nth-child(3) {
+  transition-delay: 0.25s;
+}
+
+/* Floating animation for special elements */
+.project-card[data-level="advanced"]::after {
+  content: "⭐";
+  position: absolute;
+  bottom: var(--space-2);
+  right: var(--space-2);
+  font-size: 1.2rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ========================================
+   RESPONSIVE - GAMEBOY MOBILE LAYOUT
+   ======================================== */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  h3 {
+    font-size: 0.75rem;
+  }
+
+  .project-title {
+    font-size: 0.65rem;
+  }
+
+  header .navigation {
+    gap: var(--space-2);
+  }
+
+  header .navigation a {
+    font-size: 0.6rem;
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .projects-list {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-toggle {
+    width: 48px;
+    height: 48px;
+  }
+
+  .weather-chip,
+  .timer-chip {
+    font-size: 0.5rem;
+    padding: var(--space-1);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Gameboy-style compact layout */
+  :root {
+    --space-1: 6px;
+    --space-2: 10px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --pixel-border: 3px;
+  }
+
+  body {
+    font-size: 14px;
+    background-size: 3px 3px;
+  }
+
+  .container,
+  header {
+    padding: 0 var(--space-2);
+  }
+
+  header h1::before {
+    content: "L21 ";
+    font-size: 0.6rem;
+  }
+
+  .pill-button,
+  .advice-button {
+    font-size: 0.5rem;
+    padding: var(--space-1) var(--space-2);
+  }
+
+  #contact button {
+    font-size: 0.65rem;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY & FOCUS STATES
+   ======================================== */
+
+*:focus-visible {
+  outline: 3px solid var(--rpg-gold);
+  outline-offset: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--rpg-gold);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --pixel-border: 5px;
+  }
+
+  body {
+    background-image: none;
+  }
+}

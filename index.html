@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta for UTF-8 and responsive layouts -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Rayan's Quest - An interactive RPG portfolio adventure. Complete quests to unlock developer information in this unique 2D game experience." />
+  <meta name="author" content="Rayan Alamri" />
+  <meta name="keywords" content="portfolio, RPG, game, web development, KFUPM, SWE363" />
+  <meta name="theme-color" content="#1a1a2e" />
+
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="Rayan's Quest - Portfolio Adventure" />
+  <meta property="og:description" content="An interactive RPG portfolio where you complete quests to unlock developer information." />
+  <meta property="og:type" content="website" />
+
+  <title>Rayan's Quest - Portfolio Adventure</title>
+
+  <!-- Main stylesheet -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- Game stylesheet -->
+  <link href="css/game.css" rel="stylesheet" />
+
+  <!-- JS for smooth scrolling + dark mode toggle (defer = run after HTML parsed) -->
+  <script src="js/script.js" defer></script>
+  <!-- RPG Game Engine -->
+  <script src="js/game.js" defer></script>
+</head>
+<body>
+  <!-- Site header with primary navigation -->
+  <header>
+    <h1>Rayan Alamri</h1>
+
+    <!-- aria-label helps assistive tech identify this nav -->
+    <nav class="navigation" aria-label="Primary">
+      <!-- In-page links jump to section IDs -->
+      <a href="#about">About Me</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+
+      <!-- Theme toggle (handled by JS), aria-pressed reflects current state -->
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" aria-pressed="false">
+        <span class="theme-toggle__label">Toggle theme</span>
+      </button>
+      <div class="weather-chip" role="status" aria-live="polite">
+        <button id="weatherRefresh" type="button" class="weather-chip__button" aria-label="Refresh weather">
+          <span id="weatherTemp" class="weather-chip__temp">--°</span>
+          <span id="weatherState" class="weather-chip__state">Loading weather...</span>
+        </button>
+      </div>
+      <div
+        class="timer-chip"
+        role="status"
+        aria-live="polite"
+        aria-label="Time on page"
+        data-tooltip="This shows how long you’ve been on this page."
+      >
+        <span class="timer-chip__icon" aria-hidden="true">&#x23F3;</span>
+        <span id="timeOnPage" class="timer-chip__value">00:00</span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="session" class="container reveal">
+      <h2>Personalized Controls</h2>
+      <div class="panel-grid">
+        <div class="panel-card">
+          <h3>Welcome</h3>
+          <p id="greeting" class="muted-text">Tell me your name so I can greet you.</p>
+          <label class="stacked" for="visitorName">Your name</label>
+          <input id="visitorName" name="visitorName" type="text" autocomplete="name" placeholder="e.g. Rayan" />
+          <p id="nameStatus" class="field-hint" aria-live="polite"></p>
+        </div>
+        <div class="panel-card">
+          <h3>Session</h3>
+          <p class="muted-text">Toggle login state and control the project list.</p>
+          <div class="inline-actions">
+            <button id="loginToggle" type="button" class="pill-button" aria-pressed="false">Log in</button>
+            <button id="projectsVisibility" type="button" class="pill-button">Hide projects</button>
+          </div>
+          <p id="loginStatus" class="field-hint" aria-live="polite">You are logged out.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT: section landmark with container width helper -->
+    <section id="about" class="container reveal">
+      <h2>About Me</h2>
+      <!-- Regular paragraph (not a heading) for body copy -->
+      <p>
+        I'm Rayan Alamri, a CS student at KFUPM. I enjoy turning small ideas into working
+        prototypes and refining them with feedback. Lately I have been exploring web
+        development and automation to solve everyday problems.
+      </p>
+    </section>
+
+    <!-- PROJECTS: one container, then a list of cards -->
+    <section id="projects" class="container reveal">
+      <h2>Projects</h2>
+      <div class="filters">
+        <div class="filter-field">
+          <label for="projectFilter">Filter by type</label>
+          <select id="projectFilter" name="projectFilter">
+            <option value="all">All projects</option>
+            <option value="web">Web</option>
+            <option value="hardware">Hardware</option>
+            <option value="ai">AI / ML</option>
+          </select>
+        </div>
+        <div class="filter-field">
+          <label for="projectLevel">Skill focus</label>
+          <div id="projectLevel" class="level-options" role="group" aria-label="Choose experience level">
+            <button type="button" data-level="all" class="pill-button pill-button--ghost is-active">Any</button>
+            <button type="button" data-level="beginner" class="pill-button pill-button--ghost">Beginner</button>
+            <button type="button" data-level="advanced" class="pill-button pill-button--ghost">Advanced</button>
+          </div>
+          <p id="levelMessage" class="field-hint" aria-live="polite">Showing beginner-friendly and advanced picks.</p>
+        </div>
+        <div class="filter-field">
+          <label for="projectSort">Sort</label>
+          <select id="projectSort" name="projectSort">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="title">Title A → Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Use a single list wrapper; each project is a card -->
+      <div class="projects-list">
+        <article class="project-card reveal" data-type="hardware" data-level="advanced" data-date="2023-05-01">
+          <button class="project-toggle" type="button" aria-expanded="false" aria-controls="project-1">
+            <span class="project-title">MIPS CPU in Logisim</span>
+            <span class="project-toggle-icon" aria-hidden="true"></span>
+          </button>
+          <div class="project-content" id="project-1" hidden>
+            <p>
+              Built a simple single-cycle CPU in Logisim to execute a small subset of MIPS-style
+              instructions (add, sub, lw, sw, beq). Designed the datapath and control unit, then
+              verified behavior with test programs in the MARS simulator.
+            </p>
+            <!-- Placeholder image (replace later with real screenshot) -->
+            <img
+              src="assets/images/placeHolderCompressed.jpg"
+              alt="Mars CPU project placeholder image"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="450"
+            />
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-type="web" data-level="beginner" data-date="2024-02-15">
+          <button class="project-toggle" type="button" aria-expanded="false" aria-controls="project-2">
+            <span class="project-title">University League Organizer (Website)</span>
+            <span class="project-toggle-icon" aria-hidden="true"></span>
+          </button>
+          <div class="project-content" id="project-2" hidden>
+            <p>
+              A lightweight website to register teams, generate fixtures, and track standings for
+              the university league. Focused on a clean, mobile-first UI and simple interactions
+              for organizers and players.
+            </p>
+            <img
+              src="assets/images/placeHolderCompressed.jpg"
+              alt="League organizer site placeholder image"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="450"
+            />
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-type="ai" data-level="advanced" data-date="2024-08-10">
+          <button class="project-toggle" type="button" aria-expanded="false" aria-controls="project-3">
+            <span class="project-title">Study Buddy (AI Assistant)</span>
+            <span class="project-toggle-icon" aria-hidden="true"></span>
+          </button>
+          <div class="project-content" id="project-3" hidden>
+            <p>
+              A chatbot-style assistant that summarizes class notes, generates flashcards, and sets reminders.
+              Built with a simple Node backend and a lightweight UI so students can focus on studying.
+            </p>
+            <img
+              src="assets/images/placeHolderCompressed.jpg"
+              alt="AI assistant project placeholder image"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="450"
+            />
+          </div>
+        </article>
+      </div>
+      <p id="projectsEmpty" class="projects-empty reveal" hidden>No projects found. Check back soon!</p>
+    </section>
+
+    <section id="advice" class="container reveal">
+      <h2>Advice of the Day</h2>
+      <article class="advice-card">
+        <p id="adviceText" class="advice-text" aria-live="polite">Loading advice...</p>
+        <div class="advice-actions">
+          <button id="adviceRefresh" type="button" class="advice-button">New Advice</button>
+          <span id="adviceStatus" class="advice-status" role="status" aria-live="polite"></span>
+        </div>
+      </article>
+    </section>
+
+    <section id="github" class="container reveal">
+      <h2>Latest GitHub Repos</h2>
+      <article class="github-card">
+        <div class="github-header">
+          <div>
+            <p class="muted-text">Live feed of the most recently updated repositories.</p>
+            <p id="githubStatus" class="advice-status" role="status" aria-live="polite">Loading latest repositories...</p>
+          </div>
+          <button id="githubRefresh" type="button" class="advice-button">Refresh</button>
+        </div>
+        <ul id="githubRepos" class="github-list" aria-live="polite" aria-busy="true"></ul>
+      </article>
+    </section>
+
+    <!-- CONTACT: accessible labels + required fields; no backend -->
+    <section id="contact" class="container reveal">
+      <h2>Contact</h2>
+      <form>
+        <!-- label[for] must match input[id] for accessibility -->
+        <label for="name">Name:</label>
+        <input id="name" name="name" type="text" required aria-describedby="nameError" />
+        <span id="nameError" class="field-error" role="alert" aria-live="polite" hidden></span>
+
+        <label for="email">Email:</label>
+        <!-- type="email" + pattern enforce presence of domain -->
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          aria-describedby="emailError"
+          title="Enter a valid email, e.g. name@example.com"
+        />
+        <span id="emailError" class="field-error" role="alert" aria-live="polite" hidden></span>
+
+        <label for="emailConfirm">Confirm Email:</label>
+        <input
+          id="emailConfirm"
+          name="emailConfirm"
+          type="email"
+          required
+          aria-describedby="emailConfirmError"
+          title="Re-enter your email to confirm"
+        />
+        <span id="emailConfirmError" class="field-error" role="alert" aria-live="polite" hidden></span>
+
+        <label for="message">Message:</label>
+        <!-- textarea for multi-line message -->
+        <textarea id="message" name="message" rows="5" required aria-describedby="messageError"></textarea>
+        <span id="messageError" class="field-error" role="alert" aria-live="polite" hidden></span>
+
+        <!-- No action attribute = no network request; JS can show a status later -->
+        <button type="submit">Send</button>
+        <p id="formStatus" role="status" aria-live="polite" class="form-status" hidden></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- Page footer (outside main for proper landmarks) -->
+  <footer>
+    <p>
+      <small>Â© <span id="year"></span> Rayan Alamri. All rights reserved.</small>
+    </p>
+  </footer>
+</body>
+</html>
