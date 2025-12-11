@@ -687,7 +687,25 @@
   font-size: 10px;
 }
 
-/* Move portfolio button on mobile/tablet to avoid overlap with controls */
+/* Move portfolio button on mobile devices (detected via User-Agent) */
+.is-mobile-device .mode-toggle {
+  top: 10px !important;
+  bottom: auto !important;
+  right: 10px;
+  padding: 10px 16px;
+  font-size: 10px;
+}
+
+/* Show mobile controls only on detected mobile devices */
+.is-mobile-device #mobile-controls {
+  display: block !important;
+}
+
+.is-mobile-device #controls-hint {
+  display: none !important;
+}
+
+/* Fallback: also use media query for smaller screens */
 @media (max-width: 1024px) {
   .mode-toggle {
     top: 10px !important;
@@ -695,17 +713,6 @@
     right: 10px;
     padding: 8px 12px;
     font-size: 8px;
-  }
-}
-
-/* Also target touch devices specifically */
-@media (hover: none) and (pointer: coarse) {
-  .mode-toggle {
-    top: 10px !important;
-    bottom: auto !important;
-    right: 10px;
-    padding: 10px 16px;
-    font-size: 10px;
   }
 }
 

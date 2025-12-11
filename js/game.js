@@ -122,7 +122,34 @@ class RPGGame {
     // Sprites cache
     this.sprites = {};
 
+    // Mobile detection
+    this.isMobile = this.detectMobile();
+
     this.init();
+  }
+
+  /**
+   * Detect mobile device using User-Agent string
+   * Returns true if the device is a mobile/tablet
+   */
+  detectMobile() {
+    const userAgent = navigator.userAgent || '';
+
+    // Regular expression to match common mobile device identifiers
+    const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS|Tablet/i;
+
+    // Also check for touch capability as a fallback
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // Check screen size as additional indicator
+    const isSmallScreen = window.innerWidth <= 1024 || window.innerHeight <= 768;
+
+    const isMobileDevice = mobileRegex.test(userAgent);
+
+    console.log(`[Mobile Detection] User-Agent: ${userAgent.substring(0, 50)}...`);
+    console.log(`[Mobile Detection] Is Mobile: ${isMobileDevice}, Has Touch: ${hasTouch}, Small Screen: ${isSmallScreen}`);
+
+    return isMobileDevice || (hasTouch && isSmallScreen);
   }
 
   init() {
@@ -134,6 +161,12 @@ class RPGGame {
   }
 
   setup() {
+    // Apply mobile class to document for CSS targeting
+    if (this.isMobile) {
+      document.documentElement.classList.add('is-mobile-device');
+      document.body.classList.add('is-mobile-device');
+    }
+
     this.createGameUI();
     this.setupCanvas();
     this.setupGameObjects();
