@@ -15,6 +15,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #game-container.hidden {
@@ -33,14 +37,18 @@
     0 0 0 4px #3a2f2a,
     0 0 40px rgba(255, 215, 0, 0.3);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 #game-canvas {
   display: block;
   width: 100%;
-  height: calc(100% - 60px);
+  max-width: 100%;
+  flex: 1;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+  object-fit: contain;
 }
 
 /* ========================================
@@ -1707,5 +1715,197 @@
   .tracker-item.unlocked .tracker-icon {
     filter: none;
     text-shadow: 0 0 10px #fff;
+  }
+}
+
+/* ========================================
+   MOBILE CONTROLS
+   On-screen D-pad and action buttons
+   ======================================== */
+
+#mobile-controls {
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  padding: 0 20px;
+  z-index: 200;
+  pointer-events: none;
+}
+
+#mobile-controls > * {
+  pointer-events: auto;
+}
+
+.mobile-dpad {
+  position: absolute;
+  left: 20px;
+  bottom: 0;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  grid-template-areas:
+    ". up ."
+    "left . right"
+    ". down .";
+  grid-template-columns: 40px 40px 40px;
+  grid-template-rows: 40px 40px 40px;
+  gap: 0;
+}
+
+.dpad-btn {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #ffd700;
+  color: #ffd700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.dpad-btn:active {
+  background: rgba(255, 215, 0, 0.4);
+}
+
+.dpad-up {
+  grid-area: up;
+  border-radius: 8px 8px 0 0;
+}
+
+.dpad-down {
+  grid-area: down;
+  border-radius: 0 0 8px 8px;
+}
+
+.dpad-left {
+  grid-area: left;
+  border-radius: 8px 0 0 8px;
+}
+
+.dpad-right {
+  grid-area: right;
+  border-radius: 0 8px 8px 0;
+}
+
+.mobile-actions {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  display: flex;
+  gap: 15px;
+}
+
+.action-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: 3px solid #ffd700;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  transition: background 0.1s, transform 0.1s;
+}
+
+.action-btn:active {
+  background: rgba(255, 215, 0, 0.4);
+  transform: scale(0.95);
+}
+
+.action-attack {
+  border-color: #e74c3c;
+}
+
+.action-interact {
+  border-color: #3498db;
+}
+
+/* Show mobile controls on touch devices */
+@media (max-width: 1024px) and (hover: none) and (pointer: coarse) {
+  #mobile-controls {
+    display: block;
+  }
+
+  #controls-hint {
+    display: none;
+  }
+
+  #game-screen {
+    padding-bottom: 140px;
+  }
+}
+
+/* Also show on small screens */
+@media (max-width: 768px) {
+  #mobile-controls {
+    display: block;
+  }
+
+  #controls-hint {
+    display: none;
+  }
+
+  #game-screen {
+    padding-bottom: 140px;
+  }
+
+  .mobile-dpad {
+    width: 100px;
+    height: 100px;
+    grid-template-columns: 33px 34px 33px;
+    grid-template-rows: 33px 34px 33px;
+  }
+
+  .dpad-btn {
+    font-size: 14px;
+  }
+
+  .action-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #mobile-controls {
+    bottom: 10px;
+    padding: 0 10px;
+  }
+
+  .mobile-dpad {
+    left: 10px;
+    width: 90px;
+    height: 90px;
+    grid-template-columns: 30px 30px 30px;
+    grid-template-rows: 30px 30px 30px;
+  }
+
+  .dpad-btn {
+    font-size: 12px;
+    border-width: 1px;
+  }
+
+  .mobile-actions {
+    right: 10px;
+    gap: 10px;
+  }
+
+  .action-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+    border-width: 2px;
   }
 }

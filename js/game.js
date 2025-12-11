@@ -334,6 +334,20 @@ class RPGGame {
           <span><kbd>SPACE</kbd> Interact</span>
           <span><kbd>J</kbd> Attack</span>
         </div>
+
+        <!-- Mobile Controls -->
+        <div id="mobile-controls">
+          <div class="mobile-dpad">
+            <button class="dpad-btn dpad-up" data-dir="up">▲</button>
+            <button class="dpad-btn dpad-left" data-dir="left">◀</button>
+            <button class="dpad-btn dpad-right" data-dir="right">▶</button>
+            <button class="dpad-btn dpad-down" data-dir="down">▼</button>
+          </div>
+          <div class="mobile-actions">
+            <button class="action-btn action-attack" data-action="attack">⚔️</button>
+            <button class="action-btn action-interact" data-action="interact">💬</button>
+          </div>
+        </div>
       </div>
     `;
 
@@ -358,8 +372,32 @@ class RPGGame {
 
   resizeCanvas() {
     const container = document.getElementById('game-screen');
-    this.canvas.width = Math.min(960, window.innerWidth);
-    this.canvas.height = Math.min(640, window.innerHeight - 100);
+    const isMobile = window.innerWidth <= 768;
+    const mobileControlsHeight = isMobile ? 150 : 0;
+
+    // Calculate available space
+    const maxWidth = Math.min(960, window.innerWidth - 20);
+    const maxHeight = Math.min(640, window.innerHeight - 100 - mobileControlsHeight);
+
+    // Maintain aspect ratio (3:2)
+    const aspectRatio = 3 / 2;
+    let width = maxWidth;
+    let height = width / aspectRatio;
+
+    if (height > maxHeight) {
+      height = maxHeight;
+      width = height * aspectRatio;
+    }
+
+    this.canvas.width = Math.floor(width);
+    this.canvas.height = Math.floor(height);
+
+    // Update player position if out of bounds
+    if (this.player) {
+      this.player.x = Math.min(this.player.x, this.canvas.width - this.player.width);
+      this.player.y = Math.min(this.player.y, this.canvas.height - this.player.height);
+    }
+
     if (this.ctx) this.ctx.imageSmoothingEnabled = false;
   }
 
@@ -721,6 +759,57 @@ class RPGGame {
         }
       }
       lastTap = now;
+    });
+
+    // Mobile D-pad controls
+    document.querySelectorAll('.dpad-btn').forEach(btn => {
+      const dir = btn.dataset.dir;
+
+      btn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.keys[dir] = true;
+      });
+
+      btn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        this.keys[dir] = false;
+      });
+
+      // Also handle mouse for testing on desktop
+      btn.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        this.keys[dir] = true;
+      });
+
+      btn.addEventListener('mouseup', (e) => {
+        e.preventDefault();
+        this.keys[dir] = false;
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        this.keys[dir] = false;
+      });
+    });
+
+    // Mobile action buttons
+    document.querySelectorAll('.action-btn').forEach(btn => {
+      const action = btn.dataset.action;
+
+      const handleAction = (e) => {
+        e.preventDefault();
+        if (action === 'attack') {
+          this.playerAttack();
+        } else if (action === 'interact') {
+          if (this.dialog.active) {
+            this.advanceDialog();
+          } else {
+            this.handleInteract();
+          }
+        }
+      };
+
+      btn.addEventListener('touchstart', handleAction);
+      btn.addEventListener('click', handleAction);
     });
   }
 
@@ -1900,7 +1989,7 @@ class RPGGame {
               </div>
             </div>
             <div class="about-pages">
-              ${this.state.pagesFound.map(p => `
+              ${[...this.state.pagesFound].sort((a, b) => a.id.localeCompare(b.id)).map(p => `
                 <div class="about-page">
                   <h4>${p.content.title}</h4>
                   <p>${p.content.text}</p>
